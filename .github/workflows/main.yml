@@ -8,13 +8,11 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v5
       with:
-        python-version: '3.12' 
-        architecture: 'x64'
-        cache: pip
-    - run: python --version
-    - run: python -c "import platform; print(platform.uname())" 
-    - run: pip install -r requirements.txt
-    - run: conan profile detect
+        python-version: '3.11' 
+    - run: arch -x86_64 python --version
+    - run: arch -x86_64 python -c "import platform; print(platform.uname())" 
+    - run: arch -x86_64 python -m pip install -r requirements.txt
+    - run: arch -x86_64 conan profile detect -f
 
   test2:
     runs-on: macos-latest
@@ -23,10 +21,8 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-        architecture: 'arm64'
-        cache: pip
-    - run: python --version
-    - run: python -c "import platform; print(platform.uname())"
-    - run: pip install -r requirements.txt
-    - run: conan profile detect
+    - run: arch -arm64 python --version
+    - run: arch -arm64 python -c "import platform; print(platform.uname())" 
+    - run: arch -arm64 python -m pip install -r requirements.txt
+    - run: arch -arm64 conan profile detect -f
 
