@@ -2,7 +2,7 @@ name: CI
 on: push
 
 jobs:
-  test:
+  test1:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -12,3 +12,15 @@ jobs:
         architecture: 'x64'
     - run: python --version
     - run: python -c "import platform; print(platform.uname())" 
+
+  test2:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11' 
+        architecture: 'x86'
+    - run: python --version
+    - run: python -c "import platform; print(platform.uname())"
+
