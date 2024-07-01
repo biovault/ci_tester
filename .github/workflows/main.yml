@@ -13,7 +13,7 @@ jobs:
         cache: pip
     - run: python --version
     - run: python -c "import platform; print(platform.uname())" 
-    - run: pip install -r requirements
+    - run: pip install -r requirements.txt
     - run: conan profile detect
 
   test2:
@@ -27,6 +27,6 @@ jobs:
         cache: pip
     - run: python --version
     - run: python -c "import platform; print(platform.uname())"
-    - run: pip install -r requirements
+    - run: pip install -r requirements.txt
     - run: conan profile detect
 
