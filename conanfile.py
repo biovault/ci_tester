@@ -17,6 +17,9 @@ class CrossOmp(ConanFile):
     def system_requirements(self):
         if is_apple_os(self):
             proc = subprocess.run(
+                "brew install libomp", shell=True
+            )
+            proc = subprocess.run(
                 "brew --prefix libomp", shell=True, capture_output=True
             )
             subprocess.run(
