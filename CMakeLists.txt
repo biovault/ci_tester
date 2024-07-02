@@ -7,6 +7,7 @@ project(cross_omp VERSION 1.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+message(STATUS "OpenMP root in CMake: ${OpenMP_ROOT}")
 find_package(OpenMP REQUIRED)
 
 # add the executable
