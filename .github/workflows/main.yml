@@ -2,6 +2,10 @@ name: CI
 on: push
 
 jobs:
+  install-brew-rosetta:
+    steps:
+      - run: arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
   test1:
     runs-on: macos-latest
     steps:
@@ -14,7 +18,6 @@ jobs:
         arch -x86_64 python --version
         arch -x86_64 python -c "import platform; print(platform.uname())" 
         arch -x86_64 python -m pip install -r requirements.txt
-        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         export PATH="/opt/homebrew/bin:$PATH"
         arch -x86_64 /usr/local/bin/brew" install libomp
         arch -x86_64 conan profile detect --name build_x86
