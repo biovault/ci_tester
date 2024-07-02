@@ -12,8 +12,8 @@ message(STATUS "Architecture detected ${ARCHITECTURE}")
 execute_process(COMMAND brew --prefix libomp COMMAND tr -d '\n' OUTPUT_VARIABLE LIBOMP_ROOT)
 message(STATUS "LIBOMP_ROOT detected ${LIBOMP_ROOT}")
 
-message(STATUS "OpenMP root in CMake: ${LIBMP_ROOT}")
-find_package(OpenMP REQUIRED PATHS LIBOMP_ROOT)
+message(STATUS "OpenMP root in CMake: ${LIBOMP_ROOT}")
+find_package(OpenMP REQUIRED PATHS ${LIBOMP_ROOT})
 
 # add the executable
 add_executable(${PROJECT_NAME} src/main.cpp)
