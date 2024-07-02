@@ -2,13 +2,11 @@ name: CI
 on: push
 
 jobs:
-  install-brew-rosetta:
-    steps:
-      - run: arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   test1:
     runs-on: macos-latest
     steps:
+    - run: arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v5
       with:
