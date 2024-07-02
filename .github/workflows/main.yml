@@ -13,6 +13,7 @@ jobs:
     - run: arch -x86_64 python -c "import platform; print(platform.uname())" 
     - run: arch -x86_64 python -m pip install -r requirements.txt
     - run: arch -x86_64 conan profile detect -f
+    - run: arch -x86_64 conan build . -pr:h default -pr:b default
 
   test2:
     runs-on: macos-latest
@@ -25,4 +26,5 @@ jobs:
     - run: arch -arm64 python -c "import platform; print(platform.uname())" 
     - run: arch -arm64 python -m pip install -r requirements.txt
     - run: arch -arm64 conan profile detect -f
+    - run: arch -arm64 conan build . -pr:h default -pr:b default
 
