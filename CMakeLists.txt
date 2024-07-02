@@ -7,6 +7,9 @@ project(cross_omp VERSION 1.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
+message(STATUS " Architecture detected ${ARCHITECTURE}")
+
 message(STATUS "OpenMP root in CMake: ${OpenMP_ROOT}")
 find_package(OpenMP REQUIRED PATHS OpenMP_ROOT)
 
