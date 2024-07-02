@@ -1,6 +1,6 @@
 from conan import ConanFile
 from conan.tools.system import package_manager
-from conan.tools.cmake import CMakeToolchain
+from conan.tools.cmake import CMakeToolchain, CMake
 from conan.tools.apple import is_apple_os
 import subprocess
 
@@ -24,6 +24,12 @@ class CrossOmp(ConanFile):
             )
             prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
             tc.variables["OpenMP_ROOT"] = prefix_path            
-  
-    def system_requirements(self):
-        package_manager.Brew(self).install(["libomp"])
+
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+
+    def package(self):
+        cmake = CMake(self)
+        cmake.install()
