@@ -13,14 +13,15 @@ class CrossOmp(ConanFile):
     url = "https://github.com/biovault/ci_tester.git"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
+    arch = str(platform.machine())
 
     def system_requirements(self):
         if is_apple_os(self):
             proc = subprocess.run(
-                "brew install libomp", shell=True
+                f"arch -{self.arch} brew install libomp", shell=True
             )
             proc = subprocess.run(
-                "brew --prefix libomp", shell=True, capture_output=True
+                f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
             )
             subprocess.run(
                 f"ln {proc.stdout.decode('UTF-8').strip()}/lib/libomp.dylib /usr/local/lib/libomp.dylib",
@@ -28,7 +29,6 @@ class CrossOmp(ConanFile):
             )           
 
     def generate(self):
-        arch = str(platform.machine())
         if is_apple_os(self):
             generator = "Xcode"
 
@@ -36,7 +36,7 @@ class CrossOmp(ConanFile):
         if is_apple_os(self):
             print(f"Working with architecture {arch}")
             proc = subprocess.run(
-                f"arch -{arch} brew --prefix libomp", shell=True, capture_output=True
+                f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
             )
             prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
             tc.variables["OpenMP_ROOT"] = prefix_path   
