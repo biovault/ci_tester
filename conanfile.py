@@ -36,10 +36,10 @@ class CrossOmp(ConanFile):
                 f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
             )
             prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
-            tc.variables["OpenMP_ROOT"] = prefix_path   
-            print(f"libomp path {tc.variables['OpenMP_ROOT']}")  
-            tc.variables["CMAKE_C_IMPLICIT_LINK_DIRECTORIES"] = prefix_path
-            tc.variables["CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES"] = prefix_path
+            # tc.variables["OpenMP_ROOT"] = prefix_path   
+            # print(f"libomp path {tc.variables['OpenMP_ROOT']}")  
+            # tc.variables["CMAKE_C_IMPLICIT_LINK_DIRECTORIES"] = prefix_path
+            # tc.variables["CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES"] = prefix_path
         tc.generate()      
 
     def build(self):
