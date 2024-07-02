@@ -13,7 +13,7 @@ execute_process(COMMAND brew --prefix libomp COMMAND tr -d '\n' OUTPUT_VARIABLE 
 message(STATUS "LIBOMP_ROOT detected ${LIBOMP_ROOT}")
 
 message(STATUS "OpenMP root in CMake: ${LIBOMP_ROOT}")
-find_package(OpenMP REQUIRED PATHS ${LIBOMP_ROOT})
+find_package(OpenMP REQUIRED MODULE PATHS ${LIBOMP_ROOT})
 
 # add the executable
 add_executable(${PROJECT_NAME} src/main.cpp)
