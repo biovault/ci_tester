@@ -26,4 +26,4 @@ class CrossOmp(ConanFile):
             tc.variables["OpenMP_ROOT"] = prefix_path            
   
     def system_requirements(self):
-        package_manager.Brew(self).install(["libomp"], update=True, check=True)
+        package_manager.Brew(self).install(["libomp"])
