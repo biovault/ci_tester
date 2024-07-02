@@ -23,7 +23,8 @@ class CrossOmp(ConanFile):
                 "brew --prefix libomp", shell=True, capture_output=True
             )
             prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
-            tc.variables["OpenMP_ROOT"] = prefix_path      
+            tc.variables["OpenMP_ROOT"] = prefix_path   
+            print(f"libomp path {tc.variables['OpenMP_ROOT']}")   
         tc.generate()      
 
     def build(self):
