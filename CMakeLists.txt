@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
-message(STATUS " Architecture detected ${ARCHITECTURE}")
+message(STATUS "Architecture detected ${ARCHITECTURE}")
+execute_process(COMMAND file ${OpenMP_ROOT}/lib/libomp.dylib COMMAND tr -d '\n' OUTPUT_VARIABLE FILE_INFO)
+message(STATUS "File info detected ${FILE_INFO}")
 
 message(STATUS "OpenMP root in CMake: ${OpenMP_ROOT}")
 find_package(OpenMP REQUIRED PATHS OpenMP_ROOT)
