@@ -31,7 +31,7 @@ class CrossOmp(ConanFile):
 
         tc = CMakeToolchain(self, generator=generator)
         if is_apple_os(self):
-            print(f"Working with architecture {arch}")
+            print(f"Working with architecture {self.arch}")
             proc = subprocess.run(
                 f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
             )
