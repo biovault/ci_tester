@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 message(STATUS "OpenMP root in CMake: ${OpenMP_ROOT}")
-find_package(OpenMP REQUIRED)
+find_package(OpenMP REQUIRED PATHS OpenMP_ROOT)
 
 # add the executable
 add_executable(${PROJECT_NAME} src/main.cpp)
