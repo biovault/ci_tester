@@ -9,12 +9,16 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-    - run: arch -x86_64 python --version
-    - run: arch -x86_64 python -c "import platform; print(platform.uname())" 
-    - run: arch -x86_64 python -m pip install -r requirements.txt
-    - run: arch -x86_64 brew install libomp
-    - run: arch -x86_64 conan profile detect --name build_x86
-    - run: arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
+    - run: |
+      arch -x86_64 python --version
+      arch -x86_64 python -c "import platform; print(platform.uname())" 
+      arch -x86_64 python -m pip install -r requirements.txt
+      arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      export PATH="/opt/homebrew/bin:$PATH"
+      alias ibrew="arch -x86_64 /usr/local/bin/brew"
+      ibrew install libomp
+      arch -x86_64 conan profile detect --name build_x86
+      arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
 
   test2:
     runs-on: macos-latest
@@ -23,10 +27,13 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-    - run: arch -arm64 python --version
-    - run: arch -arm64 python -c "import platform; print(platform.uname())" 
-    - run: arch -arm64 python -m pip install -r requirements.txt
-    - run: arch -arm64 brew install libomp
-    - run: arch -arm64 conan profile detect --name build_arm
-    - run: arch -arm64 conan build . -pr:h build_arm -pr:b buil_arm
+    - run: | 
+      arch -arm64 python --version
+      arch -arm64 python -c "import platform; print(platform.uname())" 
+      arch -arm64 python -m pip install -r requirements.txt
+      export PATH="/usr/local/bin:$PATH"
+      alias mbrew="arch -arm64 /opt/homebrew/bin/brew"
+      mbrew install libomp
+      arch -arm64 conan profile detect --name build_arm
+      arch -arm64 conan build . -pr:h build_arm -pr:b buil_arm
 
