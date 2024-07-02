@@ -8,12 +8,8 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
-message(STATUS "Architecture detected ${ARCHITECTURE}")
-execute_process(COMMAND brew --prefix libomp COMMAND tr -d '\n' OUTPUT_VARIABLE LIBOMP_ROOT)
-message(STATUS "LIBOMP_ROOT detected ${LIBOMP_ROOT}")
-
-message(STATUS "OpenMP root in CMake: ${LIBOMP_ROOT}")
-find_package(OpenMP)
+message(STATUS "Build architecture detected ${ARCHITECTURE}")
+find_package(OpenMP PATHS ${OpenMP_ROOT})
 
 # add the executable
 add_executable(${PROJECT_NAME} src/main.cpp)
