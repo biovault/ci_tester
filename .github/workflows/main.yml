@@ -17,7 +17,7 @@ jobs:
         arch -x86_64 python -c "import platform; print(platform.uname())" 
         arch -x86_64 python -m pip install -r requirements.txt
         export PATH="/opt/homebrew/bin:$PATH"
-        arch -x86_64 /usr/local/bin/brew" install libomp
+        arch -x86_64 /usr/local/bin/brew install libomp
         arch -x86_64 conan profile detect --name build_x86
         arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
       shell: bash
