@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 # set the project name and version
-project(cross_omp VERSION 1.0)
+project(cross_omp VERSION 1.0 C CXX)
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 11)
@@ -13,12 +13,15 @@ execute_process(COMMAND brew --prefix libomp COMMAND tr -d '\n' OUTPUT_VARIABLE 
 message(STATUS "LIBOMP_ROOT detected ${LIBOMP_ROOT}")
 
 message(STATUS "OpenMP root in CMake: ${LIBOMP_ROOT}")
-find_package(OpenMP REQUIRED MODULE PATHS ${LIBOMP_ROOT})
+find_package(OpenMP)
 
 # add the executable
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
+if(USE_OPENMP AND OpenMP_CXX_FOUND)
+	message(STATUS "Link to OpenMP")
+    target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
+endif()
 
 # add the binary tree to the search path for include files
 # so that we will find TutorialConfig.h
