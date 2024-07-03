@@ -15,5 +15,5 @@ find_package(OpenMP COMPONENTS CXX REQUIRED)
 # add the executable and include link OpenMP
 add_executable(${PROJECT_NAME} src/main.cpp)
 target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
-target_include_directories(${PROJECT_NAME} OpenMP_CXX_INCLUDE_DIRS)
+target_include_directories(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
 
