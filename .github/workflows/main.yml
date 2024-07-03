@@ -20,6 +20,10 @@ jobs:
         arch -x86_64 conan profile detect --name build_x86
         arch -x86_64 conan create . -pr:h build_x86 -pr:b build_x86
       shell: bash
+    - uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact
+        path: ~/build_x86_64
 
   arm64_test:
     runs-on: macos-latest
@@ -38,19 +42,12 @@ jobs:
         conan profile detect --name build_arm
         conan create . -pr:h build_arm -pr:b build_arm
       shell: bash
-
-  artifacts:
-    needs: [x86-64_test, arm64_test]
-    runs-on: macos-latest
-    steps:
-    - uses: actions/upload-artifact@v4
-      with:
-        name: my-artifact
-        path: ~/build_x86_64
     - uses: actions/upload-artifact@v4
       with:
         name: my-artifact
         path: ~/build_arm64
+
+
 
 
 
