@@ -14,14 +14,12 @@ jobs:
         python-version: '3.11'
     - name: Build Intel
       run: |
-        /usr/bin/arch -x86_64 /bin/zsh --login
         arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        python --version
         arch -x86_64 python -c "import platform; print(platform.uname())" 
-        python -m pip install -r requirements.txt
+        arch -x86_64 python -m pip install -r requirements.txt
         /usr/local/bin/brew install libomp
-        conan profile detect --name build_x86
-        conan build . -pr:h build_x86 -pr:b build_x86
+        arch -x86_64 conan profile detect --name build_x86
+        arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
       shell: bash
 
     - name: Archive production artifacts
