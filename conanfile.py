@@ -14,18 +14,7 @@ class CrossOmp(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     arch = str(platform.machine())
-
-    def system_requirements(self):
-        pass
-        # if is_apple_os(self):
-        #     proc = subprocess.run(
-        #         f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
-        #     )
-        #     subprocess.run(
-        #         f"ln {proc.stdout.decode('UTF-8').strip()}/lib/libomp.dylib /usr/local/lib/libomp.dylib",
-        #         shell=True,
-        #     )           
-
+     
     def generate(self):
         if is_apple_os(self):
             generator = "Xcode"
@@ -37,7 +26,7 @@ class CrossOmp(ConanFile):
                 f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
             )
             prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
-            tc.variables["OpenMP_ROOT"] = prefix_path   
+            # tc.variables["OpenMP_ROOT"] = prefix_path   
         tc.generate()      
 
     def build(self):
