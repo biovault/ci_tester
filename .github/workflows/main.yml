@@ -1,8 +1,7 @@
 name: CI
 on: 
   push
-  
-  
+
 jobs:
 
   x86-64_test:
@@ -19,16 +18,8 @@ jobs:
         arch -x86_64 python -m pip install -r requirements.txt
         /usr/local/bin/brew install libomp
         arch -x86_64 conan profile detect --name build_x86
-        arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
+        arch -x86_64 conan create . -pr:h build_x86 -pr:b build_x86
       shell: bash
-
-    - name: Archive production artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: x86_64_build
-        path: |
-          dist
-          !dist/**/*.md
 
   arm64_test:
     runs-on: macos-latest
@@ -45,7 +36,7 @@ jobs:
         python -m pip install -r requirements.txt
         /opt/homebrew/bin/brew install libomp
         conan profile detect --name build_arm
-        conan build . -pr:h build_arm -pr:b build_arm
+        conan create . -pr:h build_arm -pr:b build_arm
       shell: bash
 
   artifacts:
