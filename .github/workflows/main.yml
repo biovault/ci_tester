@@ -47,7 +47,13 @@ jobs:
         name: arm64_artifact
         path: ~/build_arm64
 
-
+  fat_binary:
+    runs-on: macos-latest
+    - uses: actions/download-artifact@v4
+      with:
+        path: cross_artifacts
+    - name: Display structure of downloaded files
+      run: ls -R cross_artifacts   
 
 
 
