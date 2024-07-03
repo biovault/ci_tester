@@ -1,28 +1,38 @@
 name: CI
-on: push
-
+on: 
+  push
+  
+  
 jobs:
 
-  test1:
+  x86-64_test:
     runs-on: macos-latest
     steps:
-    - run: arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     - name: Build Intel
       run: |
-        arch -x86_64 python --version
-        arch -x86_64 python -c "import platform; print(platform.uname())" 
-        arch -x86_64 python -m pip install -r requirements.txt
-        eval "$(/usr/local/bin/brew shellenv)"
-        arch -x86_64 brew install libomp
-        arch -x86_64 conan profile detect --name build_x86
-        arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        /usr/bin/arch -x86_64 /bin/zsh --login
+        python --version
+        python -c "import platform; print(platform.uname())" 
+        python -m pip install -r requirements.txt
+        /usr/local/bin/brew install libomp
+        conan profile detect --name build_x86
+        conan build . -pr:h build_x86 -pr:b build_x86
       shell: bash
 
-  test2:
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: x86_64_build
+        path: |
+          dist
+          !dist/**/*.md
+
+  arm64_test:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -31,12 +41,28 @@ jobs:
         python-version: '3.11' 
     - name: Build Arm
       run: | 
-        arch -arm64 python --version
-        arch -arm64 python -c "import platform; print(platform.uname())" 
-        arch -arm64 python -m pip install -r requirements.txt
-        export PATH="/usr/local/bin:$PATH"
-        arch -arm64 /opt/homebrew/bin/brew install libomp
-        arch -arm64 conan profile detect --name build_arm
-        arch -arm64 conan build . -pr:h build_arm -pr:b build_arm
+        /usr/bin/arch -arm64 /bin/zsh --login
+        python --version
+        python -c "import platform; print(platform.uname())" 
+        python -m pip install -r requirements.txt
+        /opt/homebrew/bin/brew install libomp
+        conan profile detect --name build_arm
+        conan build . -pr:h build_arm -pr:b build_arm
       shell: bash
+
+  artifacts:
+    needs: [x86-64_test, arm64_test]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact
+        path: ~/build_x86_64
+    - uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact
+        path: ~/build_arm64
+
+
+
 

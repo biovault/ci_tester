@@ -1,32 +1,53 @@
 from conan import ConanFile
 from conan.tools.system import package_manager
-from conan.tools.cmake import CMakeToolchain, CMake
+from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 from conan.tools.apple import is_apple_os
+from pathlib import Path
 import subprocess
 import platform
 
 class CrossOmp(ConanFile):
 
     name = "cross"
+    version = "0.1"
+
+    # Optional metadata
     description = "Text cross compiling on macos arm to x86_64"
     license = "Apache-2.0"
     url = "https://github.com/biovault/ci_tester.git"
+
+    # Binary config
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
+
+    # Sources
+    exports_sources = "CMakeLists.txt", "src/*"
+
+    # Build context info
     arch = str(platform.machine())
-     
+
+    if arch == "arm64":
+        brew = "/opt/homebrew/bin/brew" 
+    else:
+        brew = "/usr/local/bin/brew"
+    
+    def layout(self):
+        cmake_layout(self)
+
     def generate(self):
         if is_apple_os(self):
             generator = "Xcode"
 
         tc = CMakeToolchain(self, generator=generator)
         if is_apple_os(self):
-            print(f"Working with architecture {self.arch}")
+            print(f"Macos with architecture {self.arch}")
             proc = subprocess.run(
-                f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
+                f"{self.brew} --prefix libomp", shell=True, capture_output=True
             )
             prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
-            # tc.variables["OpenMP_ROOT"] = prefix_path   
+            # essential for find_package on macos
+            print(f"Macos OpenMP found at {prefix_path}")
+            tc.variables["OpenMP_ROOT"] = prefix_path   
         tc.generate()      
 
     def build(self):
@@ -36,4 +57,5 @@ class CrossOmp(ConanFile):
 
     def package(self):
         cmake = CMake(self)
-        cmake.install()
+        install_path = Path(Path.home(), f'build_{self.arch}')
+        cmake.install(cli_args=['--prefix', f'{str(install_path)}'])
