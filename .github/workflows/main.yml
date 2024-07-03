@@ -22,7 +22,7 @@ jobs:
       shell: bash
     - uses: actions/upload-artifact@v4
       with:
-        name: my-artifact
+        name: x86_64_artifact
         path: ~/build_x86_64
 
   arm64_test:
@@ -44,7 +44,7 @@ jobs:
       shell: bash
     - uses: actions/upload-artifact@v4
       with:
-        name: my-artifact
+        name: arm64_artifact
         path: ~/build_arm64
 
 
