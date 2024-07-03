@@ -7,20 +7,13 @@ project(cross_omp VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Log build architecture
 execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
 message(STATUS "Build architecture detected ${ARCHITECTURE}")
+
 find_package(OpenMP COMPONENTS CXX REQUIRED)
-
-# add the executable
+# add the executable and include link OpenMP
 add_executable(${PROJECT_NAME} src/main.cpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
+target_include_directories(${PROJECT_NAME} OpenMP_CXX_INCLUDE_DIRS)
 
-if(USE_OPENMP AND OpenMP_CXX_FOUND)
-	message(STATUS "Link to OpenMP")
-    target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
-endif()
-
-# add the binary tree to the search path for include files
-# so that we will find TutorialConfig.h
-target_include_directories(${PROJECT_NAME} PUBLIC
-                           "${PROJECT_SOURCE_DIR}/src"
-                           )
