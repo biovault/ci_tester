@@ -19,7 +19,7 @@ jobs:
         eval "$(/usr/local/bin/brew shellenv)"
         arch -x86_64 brew install libomp
         arch -x86_64 conan profile detect --name build_x86
-        export OpenMP_ROOT=$(arch -x86_64 brew --prefix)/opt/libomp
+#        export OpenMP_ROOT=$(arch -x86_64 brew --prefix)/opt/libomp
         arch -x86_64 conan build . -pr:h build_x86 -pr:b build_x86
       shell: bash
 
@@ -38,6 +38,6 @@ jobs:
         export PATH="/usr/local/bin:$PATH"
         arch -arm64 /opt/homebrew/bin/brew install libomp
         arch -arm64 conan profile detect --name build_arm
-        arch -arm64 conan build . -pr:h build_arm -pr:b buil_arm
+        arch -arm64 conan build . -pr:h build_arm -pr:b build_arm
       shell: bash
 
