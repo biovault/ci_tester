@@ -16,14 +16,15 @@ class CrossOmp(ConanFile):
     arch = str(platform.machine())
 
     def system_requirements(self):
-        if is_apple_os(self):
-            proc = subprocess.run(
-                f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
-            )
-            subprocess.run(
-                f"ln {proc.stdout.decode('UTF-8').strip()}/lib/libomp.dylib /usr/local/lib/libomp.dylib",
-                shell=True,
-            )           
+        pass
+        # if is_apple_os(self):
+        #     proc = subprocess.run(
+        #         f"arch -{self.arch} brew --prefix libomp", shell=True, capture_output=True
+        #     )
+        #     subprocess.run(
+        #         f"ln {proc.stdout.decode('UTF-8').strip()}/lib/libomp.dylib /usr/local/lib/libomp.dylib",
+        #         shell=True,
+        #     )           
 
     def generate(self):
         if is_apple_os(self):
