@@ -15,7 +15,7 @@ jobs:
     - name: Build Intel
       run: |
         /usr/bin/arch -x86_64 /bin/zsh --login
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         python --version
         arch -x86_64 python -c "import platform; print(platform.uname())" 
         python -m pip install -r requirements.txt
