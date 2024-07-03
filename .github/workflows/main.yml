@@ -49,12 +49,10 @@ jobs:
 
   fat_binary:
     runs-on: macos-latest
+    steps:
     - uses: actions/download-artifact@v4
       with:
         path: cross_artifacts
     - name: Display structure of downloaded files
       run: ls -R cross_artifacts   
-
-
-
 
