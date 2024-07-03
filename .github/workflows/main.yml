@@ -14,8 +14,8 @@ jobs:
         python-version: '3.11'
     - name: Build Intel
       run: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         /usr/bin/arch -x86_64 /bin/zsh --login
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         python --version
         python -c "import platform; print(platform.uname())" 
         python -m pip install -r requirements.txt
