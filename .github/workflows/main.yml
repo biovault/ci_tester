@@ -48,7 +48,7 @@ jobs:
         path: ~/build_arm64
 
   fat_binary:
-    needs: [x86-64_test, arm_test]
+    needs: [x86-64_test, arm64_test]
     runs-on: macos-latest
     steps:
     - uses: actions/download-artifact@v4
