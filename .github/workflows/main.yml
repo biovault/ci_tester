@@ -47,7 +47,7 @@ jobs:
         name: arm64_artifact
         path: ~/build_arm64
 
-  lipo_binary:
+  tin_to_fat_with_lipo:
     needs: [x86-64_test, arm64_test]
     runs-on: macos-latest
     steps:
@@ -64,14 +64,14 @@ jobs:
         name: fat_artifact
         path: fat
 
-  fat_libomp_build:
+  fat_build:
     runs-on: macos-latest
     steps: 
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-    - name: Brew to fat 
+    - name: Brew libomp to fat 
       run: | 
         /usr/bin/arch -arm64 /bin/zsh --login
         python --version
@@ -94,6 +94,9 @@ jobs:
       with:
         name: libomp_fat_artifact
         path: ~/libomp
-        
+    - name: Build Universal binary
+      run: 
+        conan profile detect --name build_arm
+        conan create . -pr:h build_arm -pr:b build_arm -s="arch=armv8|x86_64"
 
 

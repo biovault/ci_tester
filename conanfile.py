@@ -41,13 +41,19 @@ class CrossOmp(ConanFile):
         tc = CMakeToolchain(self, generator=generator)
         if is_apple_os(self):
             print(f"Macos with architecture {self.arch}")
-            proc = subprocess.run(
-                f"{self.brew} --prefix libomp", shell=True, capture_output=True
-            )
-            prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
-            # essential for find_package on macos
-            print(f"Macos OpenMP found at {prefix_path}")
-            tc.variables["OpenMP_ROOT"] = prefix_path   
+ 
+            # We can build Universal or per arch on Apple
+            if "x86_64" in self.settings.arch and "armv8" in self.settings.arch:
+                tc.variables["BUILD_MACOS_UNIVERSAL"] = " ON"
+                tc.variables["OpenMP_ROOT"] = str(Path(Path.home(), "libomp").as_posix())
+            else:
+                proc = subprocess.run(
+                    f"{self.brew} --prefix libomp", shell=True, capture_output=True
+                )
+                prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
+                # essential for find_package on macos
+                print(f"Macos OpenMP found at {prefix_path}")
+                tc.variables["OpenMP_ROOT"] = prefix_path  
         tc.generate()      
 
     def build(self):

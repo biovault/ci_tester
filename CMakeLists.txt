@@ -20,7 +20,11 @@ macro(print_all_variables)
     message(STATUS "print_all_variables------------------------------------------}")
 endmacro()
 
-# Nedd OpenMP_ROOT on macos
+if (APPLE AND BUILD_MACOS_UNIVERSAL)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+endif()
+
+# Need OpenMP_ROOT on macos
 find_package(OpenMP COMPONENTS CXX REQUIRED)
 # add the executable and include link OpenMP
 add_executable(${PROJECT_NAME} src/main.cpp)
