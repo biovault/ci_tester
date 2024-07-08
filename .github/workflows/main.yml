@@ -77,17 +77,17 @@ jobs:
         python --version
         python -c "import platform; print(platform.uname())" 
         python -m pip install -r requirements.txt
-# Install libomp armv8
+        # Install libomp armv8
         /opt/homebrew/bin/brew install libomp  
         export libomp_arm=$(readlink -f  $(brew --prefix libomp))  
         cp -r $libomp_arm ~/libomp 
         rm ~/libomp/lib/*.*
-# Install libomp x86_64
+        # Install libomp x86_64
         arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         arch -x86_64 python -m pip install -r requirements.txt
         /usr/local/bin/brew install libomp
         export libomp_x86_64=$(readlink -f  $(/usr/local/bin/brew --prefix libomp))
-# Merge the binaries
+        # Merge the binaries
         lipo -create $libomp_arm/lib/libomp.dylib $libomp_x86_64/lib/libomp.dylib ~/libomp/lib/libomp.dylib
         lipo -create $libomp_arm/lib/libomp.a $libomp_x86_64/lib/libomp.a ~/libomp/lib/libomp.a
     - uses: actions/upload-artifact@v4
