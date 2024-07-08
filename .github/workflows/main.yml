@@ -47,7 +47,7 @@ jobs:
         name: arm64_artifact
         path: ~/build_arm64
 
-  tin_to_fat_with_lipo:
+  thin_to_fat_with_lipo:
     needs: [x86-64_test, arm64_test]
     runs-on: macos-latest
     steps:
@@ -95,7 +95,7 @@ jobs:
         name: libomp_fat_artifact
         path: ~/libomp
     - name: Build Universal binary
-      run: 
+      run: |
         conan profile detect --name build_arm
         conan create . -pr:h build_arm -pr:b build_arm -s="arch=armv8|x86_64"
 
