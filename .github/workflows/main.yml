@@ -98,11 +98,9 @@ jobs:
       run: |
         conan profile detect --name build_arm
         conan create . -pr:h build_arm -pr:b build_arm -s="arch=armv8|x86_64"
-        export pkg_id=$(conan list "cross/0.1#latest:" | sed '$!d' | tr -s ' ' | cut -d ' ' -f2)
-        echo "THIS_PACKAGE==$(conan cache path cross/0.1#latest:$pkg_id)" >> $GITHUB_ENV
-        echo "Listing for $pkg_id"
-        conan cache path cross/0.1:$pkg_id
-        ls $(conan cache path cross/0.1#latest:$pkg_id)
+        echo "THIS_PACKAGE==$(conan cache path cross/0.1#latest)" >> $GITHUB_ENV
+        echo "Listing for cross/0.1#latest"
+        ls $($(conan cache path cross/0.1#latest))
 
     - uses: actions/upload-artifact@v4
       with:
