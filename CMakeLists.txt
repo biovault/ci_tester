@@ -11,10 +11,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
 message(STATUS "Build architecture detected ${ARCHITECTURE}")
 
+macro(print_all_variables)
+    message(STATUS "print_all_variables------------------------------------------{")
+    get_cmake_property(_variableNames VARIABLES)
+    foreach (_variableName ${_variableNames})
+        message(STATUS "${_variableName}=${${_variableName}}")
+    endforeach()
+    message(STATUS "print_all_variables------------------------------------------}")
+endmacro()
+
 # Nedd OpenMP_ROOT on macos
 find_package(OpenMP COMPONENTS CXX REQUIRED)
 # add the executable and include link OpenMP
 add_executable(${PROJECT_NAME} src/main.cpp)
+#print_all_variables()
 target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
 target_include_directories(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
 
