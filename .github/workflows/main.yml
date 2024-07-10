@@ -23,7 +23,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: x86_64_artifact
-        path: ~/build_x86_64
+        path: ~/BundleTest
 
   arm64_test:
     runs-on: macos-latest
@@ -45,7 +45,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: arm64_artifact
-        path: ~/build_arm64
+        path: ~/BundleTest
 
   #thin_to_fat_with_lipo:
   #  needs: [x86-64_test, arm64_test]
@@ -106,5 +106,5 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: fat_package_artifact
-        path: ${{ env.THIS_PACKAGE }}
+        path: ~/BundleTest
 
