@@ -47,22 +47,6 @@ jobs:
         name: arm64_artifact
         path: ~/BundleTest
 
-  #thin_to_fat_with_lipo:
-  #  needs: [x86-64_test, arm64_test]
-  #  runs-on: macos-latest
-  #  steps:
-  #  - uses: actions/download-artifact@v4
-  #    with:
-  #      path: cross_artifacts
-  #  - name: Display structure of downloaded files
-  #    run: | 
-  #      ls -R cross_artifacts   
-  #      mkdir fat
-  #      lipo -create cross_artifacts/arm64_artifact/bin/cross cross_artifacts/x86_64_artifact/bin/cross -output fat/cross
-  #  - uses: actions/upload-artifact@v4
-  #    with:
-  #      name: fat_artifact
-  #      path: fat
 
   fat_build:
     runs-on: macos-latest
