@@ -63,5 +63,5 @@ class CrossOmp(ConanFile):
 
     def package(self):
         cmake = CMake(self)
-        install_path = Path(Path.home(), f'build_{self.arch}')
+        install_path = Path(Path.home(), f'BundleTest')
         cmake.install(cli_args=['--prefix', f'{str(install_path)}'])

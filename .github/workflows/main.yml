@@ -90,6 +90,8 @@ jobs:
         # Merge the binaries
         lipo -create $libomp_arm/lib/libomp.dylib $libomp_x86_64/lib/libomp.dylib -output ~/libomp/lib/libomp.dylib
         lipo -create $libomp_arm/lib/libomp.a $libomp_x86_64/lib/libomp.a -output ~/libomp/lib/libomp.a
+        # Fix the LC_ID_DYLIB to support correct loading in the bundle (see http://clarkkromenaker.com/post/library-dynamic-loading-mac/)
+        install_name_tool -id @loader_path/../Frameworks/libomp.dylib ~/libomp/lib/libomp.dylib
     - uses: actions/upload-artifact@v4
       with:
         name: libomp_fat_artifact
