@@ -17,6 +17,8 @@ jobs:
         arch -x86_64 python -c "import platform; print(platform.uname())" 
         arch -x86_64 python -m pip install -r requirements.txt
         /usr/local/bin/brew install libomp
+        export libomp_x86_64=$(readlink -f  $(/usr/local/bin/brew --prefix libomp))
+        install_name_tool -id @loader_path/../Frameworks/libomp.dylib $libomp_x86_64/lib/libomp.dylib
         arch -x86_64 conan profile detect --name build_x86
         arch -x86_64 conan create . -pr:h build_x86 -pr:b build_x86
       shell: bash
@@ -39,6 +41,8 @@ jobs:
         python -c "import platform; print(platform.uname())" 
         python -m pip install -r requirements.txt
         /opt/homebrew/bin/brew install libomp
+        export libomp_arm=$(readlink -f  $(brew --prefix libomp))
+        install_name_tool -id @loader_path/../Frameworks/libomp.dylib $libomp_arm/lib/libomp.dylib
         conan profile detect --name build_arm
         conan create . -pr:h build_arm -pr:b build_arm
       shell: bash
